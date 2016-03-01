@@ -27,9 +27,13 @@ function p = runTrial(p)
     p.trial.pldaps.trialStates.framePrepareDrawing=2; 
     %once you know you've calculated the final image, draw it
     p.trial.pldaps.trialStates.frameDraw=3;
-    %
+    
+    % if you need stereomode, you'll also need to call frameDrawRight to
+    % fill the second buffer
+    p.trial.pldaps.trialStates.frameDrawRight=9;
+    
     p.trial.pldaps.trialStates.frameIdlePreLastDraw=4;
-    %if there is something that needs updating. here is a fucntion to do it
+    %if there is something that needs updating. here is a function to do it
     %as late as possible
     p.trial.pldaps.trialStates.frameDrawTimecritical=5;
     %if this function is not used, drawingFinished will be called after
@@ -89,6 +93,11 @@ function p = runTrial(p)
         setTimeAndFrameState(p,p.trial.pldaps.trialStates.frameDraw);
 
         tfh(p, p.trial.pldaps.trialStates.frameDraw);
+        setTimeAndFrameState(p,p.trial.pldaps.trialStates.frameDrawRight);
+        
+        tfh(p, p.trial.pldaps.trialStates.frameDrawRight);
+        
+
 %             setTimeAndFrameState(p,p.trial.pldaps.trialStates.frameIdlePreLastDraw);
 
 %             tfh(p, p.trial.pldaps.trialStates.frameIdlePreLastDraw);

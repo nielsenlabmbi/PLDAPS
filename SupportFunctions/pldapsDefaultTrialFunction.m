@@ -7,6 +7,9 @@ function pldapsDefaultTrialFunction(p,state)
         %    framePrepareDrawing(p);
         case p.trial.pldaps.trialStates.frameDraw
             frameDraw(p);
+            
+        case p.trial.pldaps.trialStates.frameDrawRight
+            frameDrawRight(p);
         %case p.trial.pldaps.trialStates.frameIdlePreLastDraw
         %    frameIdlePreLastDraw(p);
         %case p.trial.pldaps.trialStates.frameDrawTimecritical;
@@ -114,6 +117,11 @@ end
         %this holds the code to draw some stuff to the overlay (using
         %switches, like the grid, the eye Position, etc
         
+        if (p.trial.display.stereoMode ~= 0)
+            Screen('SelectStereoDrawBuffer',p.trial.display.ptr,0);
+            glNewList(p.trial.pldaps.draw.glList,GL.COMPILE_AND_EXECUTE);
+        end
+        
         %consider moving this stuff to an earlier timepoint, to allow GPU
         %to crunch on this before the real stuff gets added.
         
@@ -166,8 +174,24 @@ end
             p.trial.timing.photodiodeTimes(:,p.trial.pldaps.draw.photodiode.dataEnd) = [p.trial.ttime p.trial.iFrame];
             p.trial.pldaps.draw.photodiode.dataEnd=p.trial.pldaps.draw.photodiode.dataEnd+1;
             Screen('FillRect',  p.trial.display.ptr,photodiodecolor, p.trial.pldaps.draw.photodiode.rect');
-        end
+         end
+        
+         if (p.trial.display.stereoMode ~= 0)
+            glEndList();
+         end
     end %frameDraw
+    
+    
+        %% frameDrawRight
+    function frameDrawRight(p)
+        %this holds the code to draw some stuff to the overlay (using
+        %switches, like the grid, the eye Position, etc
+         if (p.trial.display.stereoMode ~= 0)
+            Screen('SelectStereoDrawBuffer',p.trial.display.ptr,1);
+            glCallList(p.trial.pldaps.draw.glList);
+         end
+     
+    end %frameDrawRight
 
     %% frameIdlePreLastDraw
 %     function frameIdlePreLastDraw(p)
@@ -309,6 +333,12 @@ end
             
             p.trial.pldaps.draw.framerate.sf=sf;
         end
+        
+        %%% if we care stereo, we'll draw the default draws into a List
+        %   to reuse for the right eye
+        if (p.trial.display.stereoMode ~= 0)
+            p.trial.pldaps.draw.glList = glGenLists(1);
+        end
 
 %         %setup assignemnt of eyeposition data to eyeX and eyeY
 %         %first create the S structs for subsref.
@@ -405,6 +435,11 @@ end
 
         %do a last frameUpdate
         frameUpdate(p)
+        
+        %delete the glList in case of stereo
+        if (p.trial.display.stereoMode ~= 0)
+            glDeleteLists(p.trial.pldaps.draw.glList,1);
+        end
         
 %TODO move to pds.datapixx.cleanUpandSave
         %clean up analogData collection from Datapixx
