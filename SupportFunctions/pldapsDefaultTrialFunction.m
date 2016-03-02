@@ -119,7 +119,7 @@ end
         
         if (p.trial.display.stereoMode ~= 0)
             Screen('SelectStereoDrawBuffer',p.trial.display.ptr,0);
-            glNewList(p.trial.pldaps.draw.glList,GL.COMPILE_AND_EXECUTE);
+            glNewList(p.trial.pldaps.draw.glList,p.trial.display.GL.COMPILE_AND_EXECUTE);
         end
         
         %consider moving this stuff to an earlier timepoint, to allow GPU

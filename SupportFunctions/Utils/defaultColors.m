@@ -74,7 +74,7 @@ elseif p.defaultParameters.display.useOverlay %TODO add switch so choose between
    p.defaultParameters.display.clut.greenbg    = p.defaultParameters.display.humanCLUT(12+1,:)';
    p.defaultParameters.display.clut.redbg      = p.defaultParameters.display.humanCLUT(13+1,:)';
    p.defaultParameters.display.clut.blackbg    = p.defaultParameters.display.humanCLUT(14+1,:)';
-else p.defaultParameters.display.useOverlay %TODO add switch so choose between monkey and human clut
+else %p.defaultParameters.display.useOverlay %TODO add switch so choose between monkey and human clut
    p.defaultParameters.display.clut.bg         = p.defaultParameters.display.monkeyCLUT(1+1,:)';
    p.defaultParameters.display.clut.cursor     = p.defaultParameters.display.monkeyCLUT(2+1,:)';
    p.defaultParameters.display.clut.targetgood = p.defaultParameters.display.monkeyCLUT(3+1,:)';

@@ -31,6 +31,7 @@ function p = openScreen(p)
 
 
 InitializeMatlabOpenGL(0,0); %second 0: debug level =0 for speed
+p.trial.display.GL.COMPILE_AND_EXECUTE=GL.COMPILE_AND_EXECUTE;
 % AssertOpenGL;
 % prevent splash screen
 Screen('Preference','VisualDebugLevel',3);
