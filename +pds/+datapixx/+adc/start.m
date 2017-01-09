@@ -91,7 +91,7 @@ Datapixx('RegWrRd')
 Datapixx('SetAdcSchedule', p.trial.datapixx.adc.startDelay, p.trial.datapixx.adc.srate, p.trial.datapixx.adc.maxSamples, AdcChListCode, p.trial.datapixx.adc.bufferAddress, p.trial.datapixx.adc.numBufferFrames);
 Datapixx('DisableDacAdcLoopback');           % Replace this with DisableDacAdcLoopback to collect real data
 Datapixx('DisableAdcFreeRunning');          % For microsecond-precise sample windows
-Datapixx('StartAdcSchedule')
+Datapixx('StartAdcSchedule');
 Datapixx('RegWrRd')
 
 % timing:

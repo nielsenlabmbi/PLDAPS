@@ -76,6 +76,11 @@ if p.trial.datapixx.use
         end
     end
     
+    if Datapixx('IsViewpixx')
+ %       Datapixx('EnableVideoScanningBacklight');   
+    end
+   
+    
     p.trial.datapixx.info.DatapixxFirmwareRevision = Datapixx('GetFirmwareRev'); 
     p.trial.datapixx.info.DatapixxRamSize = Datapixx('GetRamSize');
     
@@ -120,7 +125,7 @@ if p.trial.datapixx.use
         end
     
         p.trial.display.overlayptr = PsychImaging('GetOverlayWindow', p.trial.display.ptr); % , dv.params.bgColor);
-        % WARNING about LoadNormalizedGammaTable from Mario Kleiner: 
+% WARNING about LoadNormalizedGammaTable from Mario Kleiner: 
         % "Not needed, possibly harmful:
         % The PsychImaging() setup code already calls LoadIdentityClut() 
         % which loads a proper gamma table. Depending on operating system 

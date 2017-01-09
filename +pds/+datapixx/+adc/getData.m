@@ -16,6 +16,7 @@ end
 %consider having a preallocated bufferData and bufferTimeTags
 Datapixx('RegWrRd');
 adcStatus = Datapixx('GetAdcStatus');
+
 [bufferData, bufferTimetags, underflow, overflow] = Datapixx('ReadAdcBuffer', adcStatus.newBufferFrames,-1);
 if underflow
     warning('pds:datapixxadcgetData','underflow: getData is called to often');
@@ -42,33 +43,33 @@ for imap=1:nMaps
     
     p=subsasgn(p,iSub,bufferData(p.trial.datapixx.adc.channelMappingChannelInds{imap},:));
     
-    if p.trial.datapixx.useAsEyepos
-        xChannel=p.trial.datapixx.adc.XEyeposChannel==p.trial.datapixx.adc.channelMappingChannels;
-        yChannel=p.trial.datapixx.adc.YEyeposChannel==p.trial.datapixx.adc.channelMappingChannels;
-        if any(xChannel)
-        	iSub(end).subs{1}=xChannel;
-            if p.trial.pldaps.eyeposMovAv>1
-                dInds=(p.trial.datapixx.adc.dataSampleCount-p.trial.pldaps.eyeposMovAv+1):p.trial.datapixx.adc.dataSampleCount;
-                iSub(end).subs{2}=dInds;
-                p.trial.eyeX = mean(subsref(p,iSub));
-            else
-                dInds=p.trial.datapixx.adc.dataSampleCount;
-                iSub(end).subs{2}=dInds;
-                p.trial.eyeX = subsref(p,iSub);
-            end
-             
-        elseif any(yChannel)
-            iSub(end).subs{1}=yChannel;
-            
-            if p.trial.pldaps.eyeposMovAv>1
-                dInds=(p.trial.datapixx.adc.dataSampleCount-p.trial.pldaps.eyeposMovAv+1):p.trial.datapixx.adc.dataSampleCount;
-                iSub(end).subs{2}=dInds;
-                p.trial.eyeX = mean(subsref(p,iSub));
-            else
-                dInds=p.trial.datapixx.adc.dataSampleCount;
-                iSub(end).subs{2}=dInds;
-                p.trial.eyeX = subsref(p,iSub);
-            end
-        end
-    end  
-end
+%     if p.trial.datapixx.useAsEyepos
+%         xChannel=p.trial.datapixx.adc.XEyeposChannel==p.trial.datapixx.adc.channelMappingChannels;
+%         yChannel=p.trial.datapixx.adc.YEyeposChannel==p.trial.datapixx.adc.channelMappingChannels;
+%         if any(xChannel)
+%         	iSub(end).subs{1}=xChannel;
+%             if p.trial.pldaps.eyeposMovAv>1
+%                 dInds=(p.trial.datapixx.adc.dataSampleCount-p.trial.pldaps.eyeposMovAv+1):p.trial.datapixx.adc.dataSampleCount;
+%                 iSub(end).subs{2}=dInds;
+%                 p.trial.eyeX = mean(subsref(p,iSub));
+%             else
+%                 dInds=p.trial.datapixx.adc.dataSampleCount;
+%                 iSub(end).subs{2}=dInds;
+%                 p.trial.eyeX = subsref(p,iSub);
+%             end
+%              
+%         elseif any(yChannel)
+%             iSub(end).subs{1}=yChannel;
+%             
+%             if p.trial.pldaps.eyeposMovAv>1
+%                 dInds=(p.trial.datapixx.adc.dataSampleCount-p.trial.pldaps.eyeposMovAv+1):p.trial.datapixx.adc.dataSampleCount;
+%                 iSub(end).subs{2}=dInds;
+%                 p.trial.eyeX = mean(subsref(p,iSub));
+%             else
+%                 dInds=p.trial.datapixx.adc.dataSampleCount;
+%                 iSub(end).subs{2}=dInds;
+%                 p.trial.eyeX = subsref(p,iSub);
+%             end
+%         end
+end  
+

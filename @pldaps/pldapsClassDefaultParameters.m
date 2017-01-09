@@ -22,10 +22,10 @@ function s=pldapsClassDefaultParameters(s)
  s.	datapixx.	adc.	channelMapping = 'datapixx.adc.data';
  s.	datapixx.	adc.	channelModes = 0;
  s.	datapixx.	adc.	channelOffsets = 0;
- s.	datapixx.	adc.	channels = [ ];
+ s.	datapixx.	adc.	channels = [2 4 6 8];
  s.	datapixx.	adc.	maxSamples = 0;
  s.	datapixx.	adc.	numBufferFrames = 600000;
- s.	datapixx.	adc.	srate = 1000;
+ s.	datapixx.	adc.	srate =1000;
  s.	datapixx.	adc.	startDelay = 0;
  s.	datapixx.	adc.	XEyeposChannel = [ ];
  s.	datapixx.	adc.	YEyeposChannel = [ ];
@@ -44,7 +44,7 @@ function s=pldapsClassDefaultParameters(s)
  s.	display.	heightcm = 45;
  s.	display.	normalizeColor = 0;
  s.	display.	screenSize = [ ];
- s.	display.	scrnNum = 0;
+ s.	display.	scrnNum = 1;
  s.	display.	sourceFactorNew = 'GL_SRC_ALPHA';
  s.	display.	stereoFlip = [ ];
  s.	display.	stereoMode = 0;
@@ -70,15 +70,16 @@ function s=pldapsClassDefaultParameters(s)
  s.	eyelink.	custom_calibration = false;
  s.	eyelink.	custom_calibrationScale = 0.2500;
  s.	eyelink.	saveEDF = false;
- s.	eyelink.	use = true;
- s.	eyelink.	useAsEyepos = true;
+ s.	eyelink.	use = false;
+ s.	eyelink.	useAsEyepos = false;
 
 %s.	git.
  s.	git.	use = false;
 
 %s.	mouse.
- s.	mouse.	use = true;
+ s.	mouse.	use = false;
  s.	mouse.	useAsEyepos = false;
+ s. mouse.  useAsPort = false;
 
 %s.	newEraSyringePump.
  s.	newEraSyringePump.	alarmMode = 1;
@@ -106,7 +107,7 @@ function s=pldapsClassDefaultParameters(s)
  s.	pldaps.	useFileGUI = false;
 
 %s.	pldaps.	dirs.
- s.	pldaps.	dirs.	data = '/Data';
+ s.	pldaps.	dirs.	data = '~/pldapsData';
  s.	pldaps.	dirs.	wavfiles = '~/PLDAPS/beepsounds';
 
 %s.	pldaps.	draw.
@@ -114,25 +115,29 @@ function s=pldapsClassDefaultParameters(s)
  s.	pldaps.	draw.	cursor.	use = false;
 
 %s.	pldaps.	draw.	eyepos.
- s.	pldaps.	draw.	eyepos.	use = true;
+ s.	pldaps.	draw.	eyepos.	use = false;
 
 %s.	pldaps.	draw.	framerate.
  s.	pldaps.	draw.	framerate.	location = [ -30   -10 ];
  s.	pldaps.	draw.	framerate.	nSeconds = 3;
- s.	pldaps.	draw.	framerate.	show = false;
+ s.	pldaps.	draw.	framerate.	show = true;
  s.	pldaps.	draw.	framerate.	size = [ 20     5 ];
- s.	pldaps.	draw.	framerate.	use = false;
+ s.	pldaps.	draw.	framerate.	use = true;
 
 %s.	pldaps.	draw.	grid.
- s.	pldaps.	draw.	grid.	use = true;
+ s.	pldaps.	draw.	grid.	use = false;
 
 %s.	pldaps.	draw.	photodiode.
  s.	pldaps.	draw.	photodiode.	everyXFrames = 17;
  s.	pldaps.	draw.	photodiode.	location = 1;
  s.	pldaps.	draw.	photodiode.	use = 0;
+ 
+%s.	pldaps.	draw.	ports.
+ s.	pldaps.	draw.	ports.	show = true;
+ s. pldaps. draw.   ports.  size = 50;
 
 %s.	pldaps.	pause.
- s.	pldaps.	pause.	preExperiment = true;
+ s.	pldaps.	pause.	preExperiment = 0;
  s.	pldaps.	pause.	type = 1;
 
 %s.	plexon.
@@ -145,6 +150,10 @@ function s=pldapsClassDefaultParameters(s)
  s.	plexon.	spikeserver.	selfport = 3332;
  s.	plexon.	spikeserver.	use = 0;
 
+%s. ports.
+ s. ports.   use = true;
+ s. ports.   nPorts = 3;
+ 
 %s.	session.
  s.	session.	experimentFile = [ ];
 

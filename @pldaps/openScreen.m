@@ -27,8 +27,12 @@ function p = openScreen(p)
 %                           colorclamp and normalize color.
 % 05/2015    jk  update     changed for use with version 4.1
 %                           moved default parameters to the
-%                           pldapsClassDefaultParameters
+%   pldapsClassDefaultParameters
 
+
+%account for 2 graphics cards
+PsychTweak('UseGPUIndex',1);
+Screen('Preference','ScreenToHead',1,0,0);
 
 InitializeMatlabOpenGL(0,0); %second 0: debug level =0 for speed
 % AssertOpenGL;

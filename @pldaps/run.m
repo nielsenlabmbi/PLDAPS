@@ -73,6 +73,14 @@ try
                 p = initTicks(p);
             end
 
+            % Response ports
+            %-------------------------------------------------------------------------%
+             if(p.trial.ports.use)
+                 p = pds.IRports.initPortStatus(p);
+                 if(p.trial.pldaps.draw.ports.show) 
+                     p = pds.IRports.makePortsRect(p);
+                 end
+             end
 
             %get and store changes of current code to the git repository
             p = pds.git.setup(p);

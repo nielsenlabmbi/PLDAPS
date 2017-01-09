@@ -12,4 +12,6 @@ if ~p.defaultParameters.pldaps.nosave
         mkdir(fullfile(p.trial.session.dir,'TEMP'));
         save(fullfile(p.trial.session.dir,'TEMP',[p.trial.session.file(1:end-4) num2str(p.trial.pldaps.iTrial) p.trial.session.file(end-3:end)]),['trial' num2str(p.trial.pldaps.iTrial)]);
     end
+else
+    result=[];
 end
