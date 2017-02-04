@@ -78,8 +78,11 @@ function s=pldapsClassDefaultParameters(s)
  s.	git.	use = false;
 
 %s.	mouse.
+ s.	mouse.	initialCoordinates = [];
  s.	mouse.	use = true;
  s.	mouse.	useAsEyepos = false;
+ s.	mouse.	useLocalCoordinates = false;
+ s.	mouse.	windowPtr = [ ];
 
 %s.	newEraSyringePump.
  s.	newEraSyringePump.	alarmMode = 1;
@@ -140,6 +143,7 @@ function s=pldapsClassDefaultParameters(s)
 %s.	pldaps.	save.
  s.	pldaps.	save.	initialParametersMerged = 1;
  s.	pldaps.	save.	mergedData = 0;
+ s.	pldaps.	save.	trialTempfiles = 1;
  s.	pldaps.	save.	v73 = 0;
 
 %s.	pldaps.	trialStates.
@@ -175,4 +179,5 @@ function s=pldapsClassDefaultParameters(s)
 %s.	sound.
  s.	sound.	deviceid = [ ];
  s.	sound.	use = true;
+ s.	sound.	useForReward = true;
 end

@@ -19,6 +19,13 @@ try
     %% Setup and File management
     % Enure we have an experimentSetupFile set and verify output file
     
+    %make sure we are not running an experiment twice
+    if isField(p.defaultParameters, 'session.initTime')
+        warning('pldaps:run', 'pldaps objects appears to have been run before. A new pldaps object is needed for each run');
+        return
+    else
+        p.defaultParameters.session.initTime=now;
+    end
     
     % pick YOUR experiment's main CONDITION file-- this is where all
     % expt-specific stuff emerges from
@@ -31,8 +38,6 @@ try
         end
         p.defaultParameters.session.experimentSetupFile = cfile;
     end
-             
-    p.defaultParameters.session.initTime=now;
         
     if ~p.defaultParameters.pldaps.nosave
         p.defaultParameters.session.dir = p.defaultParameters.pldaps.dirs.data;
@@ -47,11 +52,16 @@ try
             p.defaultParameters.session.dir = cdir;
             p.defaultParameters.session.file = cfile;
         end
+
+         if ~exist(p.trial.session.dir, 'dir')
+            warning('pldaps:run','Data directory specified in .pldaps.dirs.data does not exist. Quitting PLDAPS. p.trial.pldaps.dirs.data=%s\nPlease create the directory along with a subdirectory called TEMP',p.trial.session.dir);
+            return;
+         end
     else
         p.defaultParameters.session.file='';
         p.defaultParameters.session.dir='';
     end
-    
+
     if p.trial.pldaps.useModularStateFunctions
         %experimentSetup before openScreen to allow modifyiers
         [modulesNames,moduleFunctionHandles,moduleRequestedStates,moduleLocationInputs] = getModules(p);
@@ -105,6 +115,13 @@ try
             p = pds.datapixx.init(p);
             
             pds.keyboard.setup(p);
+
+            if p.trial.mouse.useLocalCoordinates
+                p.trial.mouse.windowPtr=p.trial.display.ptr;
+            end
+            if ~isempty(p.trial.mouse.initialCoordinates)
+                SetMouse(p.trial.mouse.initialCoordinates(1),p.trial.mouse.initialCoordinates(2),p.trial.mouse.windowPtr)
+            end
     
             if p.trial.pldaps.useModularStateFunctions
                 [modulesNames,moduleFunctionHandles,moduleRequestedStates,moduleLocationInputs] = getModules(p);
@@ -231,6 +248,10 @@ try
 
                p.trial=oldptrial;
            end
+           
+           if ~p.defaultParameters.datapixx.use && p.defaultParameters.display.useOverlay
+                glDeleteTextures(2,glGenTextures(1));
+           end
 
            %advance to next trial
 %            if(dv.trial.pldaps.iTrial ~= dv.trial.pldaps.finish)
@@ -344,13 +365,19 @@ try
     if p.trial.display.movie.create
         Screen('FinalizeMovie', p.trial.display.movie.ptr);
     end
+    
+    if ~p.defaultParameters.datapixx.use && p.defaultParameters.display.useOverlay
+        glDeleteTextures(2,glGenTextures(1));
+    end
     Screen('CloseAll');
 
     sca;
     
 catch me
     sca
-    
+    if p.trial.sound.use
+        PsychPortAudio('Close')
+    end
     % return cursor and command-line control
     ShowCursor
     ListenChar(0)
